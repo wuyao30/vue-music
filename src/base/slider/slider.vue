@@ -4,6 +4,9 @@
       <slot>
       </slot>
     </div>
+    <div class="dots">
+      <span class="dot" :class="{active: currentPageIndex === index }" v-for="(item, index) in dots" :key="item"></span>
+    </div>
   </div>
 </template>
 
@@ -66,7 +69,6 @@ export default {
   methods: {
     _setSliderWidth(isResize) {
       this.children = this.$refs.sliderGroup.children
-
       let width = 0
       let sliderWidth = this.$refs.slider.clientWidth
       for (let i = 0; i < this.children.length; i++) {
@@ -76,9 +78,11 @@ export default {
         child.style.width = sliderWidth + 'px'
         width += sliderWidth
       }
+      console.log(this.loop)
       if (this.loop && !isResize) {
         width += 2 * sliderWidth
       }
+      console.log(width / sliderWidth)
       this.$refs.sliderGroup.style.width = width + 'px'
     },
     _initSlider() {
@@ -98,7 +102,6 @@ export default {
           pageIndex -= 1
         }
         this.currentPageIndex = pageIndex
-
         if (this.autoPlay) {
           this._play()
         }
@@ -131,6 +134,7 @@ export default {
 
   .slider
     min-height: 1px
+    position : relative
     .slider-group
       position: relative
       overflow: hidden
@@ -152,7 +156,7 @@ export default {
       position: absolute
       right: 0
       left: 0
-      bottom: 12px
+      bottom : 12px
       text-align: center
       font-size: 0
       .dot

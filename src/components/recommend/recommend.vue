@@ -1,17 +1,19 @@
 <template>
-  <div>
-    <div v-if="recommends.length" class="slider-wrapper" ref="sliderWrapper">
-      <slider>
-        <div v-for="item in recommends" :key="item">
-          <a :href="item.linkUrl">
-            <img class="needsclick" @load="loadImage" :src="item.picUrl">
-          </a>
+  <div class="recommend" ref="recommend">
+      <div>
+        <div v-if="recommends.length" class="slider-wrapper" ref="sliderWrapper">
+          <slider>
+            <div v-for="item in recommends" :key="item.id">
+              <a :href="item.linkUrl">
+                <img class="needsclick" :src="item.picUrl">
+              </a>
+            </div>
+          </slider>
         </div>
-      </slider>
-    </div>
-    <div class="recommend-list">
-      <h1 class="list-title">热门歌单推荐</h1>
-    </div>
+        <div class="recommend-list">
+          <h1 class="list-title">热门歌单推荐</h1>
+        </div>
+      </div>
   </div>
 </template>
 
@@ -38,6 +40,7 @@ export default {
       getRecommend().then(res => {
         if (res.code === ERR_OK) {
           this.recommends = res.data.slider
+          console.log(this.recommends)
         }
       })
     }
